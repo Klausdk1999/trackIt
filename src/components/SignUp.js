@@ -1,7 +1,7 @@
 import React,{ useState } from "react";
 import styled from "styled-components";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "./media/logo.png" 
 
 export default function SignUp() {
@@ -18,9 +18,9 @@ export default function SignUp() {
     let postObject=
         {
             email ,
-            name ,
-            image ,
-            password 
+            password,
+            name,
+            image
         };
     
     const promise=axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",postObject);
@@ -35,125 +35,89 @@ export default function SignUp() {
   }
 
   return (
-    <FormsContainer>
+    <>
+        
+      <Container>
         <img src={logo}/>
-      <Container>
-        E-mail
-        <input
-            type="text"
-            placeholder="Digite seu e-mail..."
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-        />
+        <Form onSubmit={submitData}>
+            <input type="text" placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} value={email}/>
+            <input type="text" placeholder="Nome" onChange={(e) => setName(e.target.value)} value={name} />
+            <input type="text" placeholder="Foto" onChange={(e) => setImage(e.target.value)} value={image}/>
+            <input type="text"  placeholder="Senha" onChange={(e) => setPassword(e.target.value)} value={password} />
+            <button type="submit" >Cadastrar</button>
+        </Form>
+        <Link to='/'>Já tem uma conta? Faça login! </Link>
       </Container>
-      <Container>
-        Nome do comprador
-        <input
-            type="text"
-            placeholder="Digite seu nome..."
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-        />
-      </Container>
-      <Container>
-        Imagem de perfil
-        <input
-            type="text"
-            placeholder="Digite o link da sua imagem..."
-            onChange={(e) => setImage(e.target.value)}
-            value={image}
-        />
-      </Container>
-      <Container>
-        Senha
-        <input
-            type="text"
-            placeholder="Digite sua senha..."
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-        />
-      </Container>
-      <OrangeBox onClick={submitData}>
-        Reservar assento(s)
-      </OrangeBox>
-    </FormsContainer>  
+    </>  
   );
 }
 
-const OrangeBox= styled.div`
-    cursor: pointer;
+const Container=styled.div`
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    margin: 15px;
-    width: 225px;
-    height: 42px;
-    background: #E8833A;
-    border-radius: 3px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
-    text-align: center;
-    letter-spacing: 0.04em;
-    color: #FFFFFF;
-    margin-top:10px ;
-`
-const FormsContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    align-items: center;
-    justify-content: space-around;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 25px;
-    color: #293845;
-    margin: 20px;
-    margin-bottom: 130px;
-` ;
-
-const Container = styled.div`
-    margin-top: 15px;
-    display: flex;
     flex-direction: column;
     width: 100%;
-    input{
-    width: 100%;
-    margin-right: 20px;
-    height: 51px;
-    left: 24px;
-    top: 497px;
-    background: #FFFFFF;
-    border: 1px solid #D5D5D5;
-    border-radius: 3px;
-    text-decoration: italic;
-    padding-left: 18px;
-    box-sizing: border-box;
+    margin-top: 68px;
     
-    ::placeholder{
-        font-style: italic;
+    font-family: 'Lexend Deca', sans-serif;
+    img{
+        width: 180px;
+        height: 178px;
+        margin-bottom: 35px;
+    }
+    a{
+        margin-top: 25px;
+        font-family: 'Lexend Deca';
+        font-style: normal;
         font-weight: 400;
-        font-size: 18px;
-        line-height: 21px;
-        color: #AFAFAF;
+        font-size: 13.976px;
+        line-height: 17px;
+        text-align: center;
+        text-decoration-line: underline;
+
+        color: #52B6FF;
     }
-    ::-webkit-input-placeholder {
-   font-style: italic;
-    }
-    :-moz-placeholder {
-    font-style: italic;  
-    }
-    ::-moz-placeholder {
-    font-style: italic;  
-    }
-    :-ms-input-placeholder {  
-    font-style: italic; 
-    }
-    }
+
+`
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: 36px;
+    margin-left: 36px;
     
-` ;
+    input {
+        height: 45px;
+        margin-right: 36px;
+        margin-left: 36px;
+        min-width: 303px;
+        margin-bottom: 6px;
+        border-radius: 5px;
+        border: 1px solid #D4D4D4; 
+        padding-left:11px ;
+        box-sizing: border-box;
+    }
+    input::placeholder {
+        color: grey;
+        font-size: 20px;
+        font-style: italic;
+    }
+    button {
+        min-width: 303px;
+        height: 45px;
+        margin-right: 36px;
+        margin-left: 36px;
+        text-align: center;
+        background-color: #52B6FF;
+        color: #FFFFFF;
+        font-size: 21px;
+        border: none;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        a{
+            text-decoration: none;
+        }
+    }
+`

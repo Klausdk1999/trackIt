@@ -1,22 +1,45 @@
-import React from "react";
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useContext, useState } from 'react';
+import {React, useContext, useState } from 'react';
+import UserContext from "../context/UserContext";
 import logo from "./media/logo.png" 
 
 export default function LoginScreen(){
-
+    
     const [email, setEmail]=useState("");
     const [password,setPassword]=useState("");
 
-    function Login(event){
+    const navigate = useNavigate();
 
+    const { user, setUser } = useContext(UserContext);
+
+    function Login(event){
         event.preventDefault();
-        const info={
-            email:email,
-            password:password
+
+        const postLogin={
+            email,
+            password
         }
+
+        const promise=axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",postLogin);
+
+        promise.then(resposta => {
+            setEmail("");
+            setPassword("");
+            
+            console.log(resposta.data);
+            setUser(
+                {
+                    id: resposta.data.id,
+                    name: resposta.data.name,
+                    image: resposta.data.image,
+                    email: resposta.data.email,
+                    token: resposta.data.token
+                },
+            );
+            navigate("/habitos");
+        });
     }
 
     return(
@@ -24,8 +47,8 @@ export default function LoginScreen(){
         <Container>
             <img src={logo} alt="logo"/>
             <Form onSubmit={Login}>
-                <input type="email" id="email" value={email} placeholder="email" required onChange={(e)=>setEmail(e.target.value)} />
-                <input type="password" id="password" value={password} placeholder="senha" required onChange={(e)=>setPassword(e.target.value)} />
+                <input type="email" id="email" value={email} placeholder="E-mail" required onChange={(e)=>setEmail(e.target.value)} />
+                <input type="password" id="password" value={password} placeholder="Senha" required onChange={(e)=>setPassword(e.target.value)} />
                 <button type="submit" >Entrar</button>
             </Form>
             <Link to='/cadastro'>Não tem uma conta? Cadastre-se</Link>
@@ -72,7 +95,7 @@ const Form = styled.form`
         height: 45px;
         margin-right: 36px;
         margin-left: 36px;
-        min-width: 303px;
+        min-width:  100px;
         margin-bottom: 6px;
         border-radius: 5px;
         border: 1px solid #D4D4D4; 
@@ -84,7 +107,7 @@ const Form = styled.form`
         font-style: italic;
     }
     button {
-        min-width: 303px;
+        min-width: 100px;
         height: 45px;
         margin-right: 36px;
         margin-left: 36px;
