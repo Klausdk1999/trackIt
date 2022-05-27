@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {React, useContext, useState } from 'react';
 import UserContext from "../context/UserContext";
 
-export default function NewHabit(){
+export default function NewHabit({setAdd}){
 
     const { user } = useContext(UserContext);
     const {image,token} = user;
@@ -81,7 +81,7 @@ export default function NewHabit(){
                 <DayBox colors={colors[6]} backgrounds={backgrounds[6]}  onClick={() => selectDay(6)}>S</DayBox>
             </ContainerDays>
             <Row>
-                <Cancel>Cancelar</Cancel>
+                <Cancel  onClick={() => setAdd(false)}>Cancelar</Cancel>
                 <button onClick={submitData}>Salvar</button>
             </Row>
             

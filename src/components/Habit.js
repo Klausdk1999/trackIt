@@ -138,5 +138,5 @@ const Container=styled.div`
     border-radius: 5px;
     padding: 5px;
     justify-content: center;
-    
+    margin-bottom: 15px;
 `

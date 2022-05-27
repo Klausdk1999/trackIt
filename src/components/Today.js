@@ -36,7 +36,7 @@ export default function Today(){
         <>
         <Header/>
         <Page>
-        <Container> <h1>Hoje</h1> <Add>+</Add> </Container>
+            <Container> <h1>Hoje</h1> <Add>+</Add> </Container>
         </Page>
         <Footer/>
         </>

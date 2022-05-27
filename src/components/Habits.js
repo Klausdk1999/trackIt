@@ -17,7 +17,7 @@ export default function HabitsPage(){
     //const navigate = useNavigate();
     // navigate("/");
     const [hasHabit, sethasHabit] = useState(true);
-    
+    const [add, setAdd] = useState(false);
     useEffect(() => {
         const config = {
             headers: {
@@ -39,8 +39,8 @@ export default function HabitsPage(){
         <>
         <Header/>
         <Page>
-        <Container> <h1>Meus hábitos</h1> <Add>+</Add> </Container>
-        <NewHabit/>
+        <Container> <h1>Meus hábitos</h1> <Add onClick={() => setAdd(!add)}>+</Add> </Container>
+        {add ? (<NewHabit setAdd={setAdd}/>):(<></>)}
         {hasHabit ? 
         (
             <DummyText> Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </DummyText>
@@ -71,7 +71,6 @@ const Column=styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
     width: 100%;
     height: calc(100vh - 140px);
     background: #E5E5E5;
