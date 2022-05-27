@@ -1,7 +1,9 @@
 import {React,useState,useEffect} from "react";
 import styled from 'styled-components';
+import trash from "./media/trash.png" ;
+import axios from "axios";
 
-export default function Habit({habit}){
+export default function Habit({habit,token}){
 
     const [backgrounds,setBackgrounds]=useState(["#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"]);
     const [colors,setColors]=useState(["#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF"]);
@@ -26,9 +28,27 @@ export default function Habit({habit}){
         isHabitDay(habit.days);
     }, []);
 
+    function deleteHabit(id){
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        };
+          
+        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,config);
+
+        promise.then(resposta => {
+            console.log(resposta.data);
+        });
+        //RECARREGAR HABITOS
+    }
+
     return(
         <Container>
-            <h1>{habit.name}</h1>
+            <Row>
+                <h1>{habit.name} </h1>
+                <img onClick={() =>deleteHabit(`${habit.id}`)} src={trash} alt="trash"></img>
+            </Row>
             <Row>
                 <DayBox colors={colors[0]} backgrounds={backgrounds[0]}>D</DayBox>
                 <DayBox colors={colors[1]} backgrounds={backgrounds[1]}>S</DayBox>
@@ -43,6 +63,7 @@ export default function Habit({habit}){
 }
 
 const DayBox=styled.div`
+    cursor: pointer;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -61,9 +82,27 @@ const DayBox=styled.div`
     color: ${props => props.colors};
 `
 const Row=styled.div`
+    width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    img{
+        margin: 10px;
+        height:15px;
+    }
+    h1{
+        margin: 10px;
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19.976px;
+        line-height: 25px;
+        color: #666666;
+        
+    }
+
     button {
+        cursor: pointer;
         margin:10px;
         min-width: 100px;
         height: 45px;
@@ -91,14 +130,7 @@ const Container=styled.div`
     height: 91px;
     background: #FFFFFF;
     border-radius: 5px;
-    justify-content: space-between;
+    padding: 5px;
+    justify-content: center;
     
-    h1{
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 19.976px;
-        line-height: 25px;
-        color: #666666;
-    }
 `

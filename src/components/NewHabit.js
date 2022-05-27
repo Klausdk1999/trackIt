@@ -91,6 +91,7 @@ export default function NewHabit(){
 }
 
 const DayBox=styled.div`
+    cursor: pointer;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -112,6 +113,7 @@ const Row=styled.div`
     display: flex;
     align-items: center;
     button {
+        cursor: pointer;
         margin:10px;
         min-width: 100px;
         height: 45px;

@@ -37,18 +37,29 @@ export default function HabitsPage(){
         <>
         <Header/>
         <Page>
-        <Container> <h1>Meus hábitos</h1> <Add >+</Add> </Container>
-        <NewHabit></NewHabit>
-        <Container>
+        <Container> <h1>Meus hábitos</h1> <Add>+</Add> </Container>
+        <NewHabit/>
+        <Column>
             {habits.map((habit) => (
-                <Habit habit={habit} key={habit.id}/>
+                <Habit habit={habit} token={token} key={habit.id}/>
             ))}
-        </Container>
+        </Column>
         </Page>
         <Footer/>
         </>
     )
 }
+
+const Column=styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: calc(100vh - 140px);
+    background: #E5E5E5;
+    margin: 20px;
+`
 
 const Page=styled.div`
     box-sizing: border-box;
