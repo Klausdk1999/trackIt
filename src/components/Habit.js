@@ -49,7 +49,7 @@ export default function Habit({habit,token}){
                 <h1>{habit.name} </h1>
                 <img onClick={() =>deleteHabit(`${habit.id}`)} src={trash} alt="trash"></img>
             </Row>
-            <Row>
+            <ContainerDays>
                 <DayBox colors={colors[0]} backgrounds={backgrounds[0]}>D</DayBox>
                 <DayBox colors={colors[1]} backgrounds={backgrounds[1]}>S</DayBox>
                 <DayBox colors={colors[2]} backgrounds={backgrounds[2]}>T</DayBox>
@@ -57,7 +57,7 @@ export default function Habit({habit,token}){
                 <DayBox colors={colors[4]} backgrounds={backgrounds[4]}>Q</DayBox>
                 <DayBox colors={colors[5]} backgrounds={backgrounds[5]}>S</DayBox>
                 <DayBox colors={colors[6]} backgrounds={backgrounds[6]}>S</DayBox>
-            </Row>
+            </ContainerDays>
         </Container>
     )
 }
@@ -73,13 +73,19 @@ const DayBox=styled.div`
     background: ${props => props.backgrounds};
     border: 1px solid #CFCFCF;
     border-radius: 5px;
-    margin:5px;
+    margin: 2.5px;
     font-family: 'Lexend Deca';
     font-style: normal;
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
     color: ${props => props.colors};
+`
+const ContainerDays=styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
 `
 const Row=styled.div`
     width: 100%;
