@@ -18,8 +18,8 @@ export default function App(){
                 <Route path="/" element={<Login/>} />
                 <Route path="/cadastro" element={<SignUp/>} />
                 <Route path="/habitos" element={<Habits/>} />
-                {/* <Route path="/hoje" element={<Today/>} />
-                <Route path="/historico" element={<History/>} /> */}
+                <Route path="/hoje" element={<Today/>} />
+                <Route path="/historico" element={<History/>} />
             </Routes>
         </BrowserRouter>
         </UserContext.Provider>

@@ -1,110 +1,89 @@
 import React from "react";
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link, useNavigate } from "react-router-dom";
+//import { Link, useNavigate } from "react-router-dom";
 import { useEffect,useContext , useState } from 'react';
 import UserContext from "../context/UserContext";
+import Header from "./Header";
+import Habit from "./Habit";
+import Footer from "./Footer";
+import NewHabit from "./NewHabit";
 
 export default function HabitsPage(){
     const { user } = useContext(UserContext);
    
-    const {id,name,image,email,token} = user;
+    const {image,token} = user;
+    const [habits,setHabits]=useState([]);
+    //const navigate = useNavigate();
+    // navigate("/");
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+        };
 
-    // function Login(event){
-    //     event.preventDefault();
+        const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`,config);
 
-    //     const postLogin={
-    //         email,
-    //         password
-    //     }
+        promise.then(resposta => {
+            console.log(resposta.data);
+            setHabits(resposta.data);
+        });
 
-    //     const promise=axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",postLogin);
-
-    //     promise.then(resposta => {
-    //         setEmail("");
-    //         setPassword("");
-    //         setToken(resposta.data.token);
-    //         navigate("/");
-    //         console.log(resposta.data);
-    //         const userInfo = React.createContext( resposta.data);
-    //     });
-    // }
-
+    }, []);
+   
     return(
+        <>
+        <Header/>
+        <Page>
+        <Container> <h1>Meus hábitos</h1> <Add >+</Add> </Container>
+        <NewHabit></NewHabit>
         <Container>
-            <img src={image} alt="logo"/>
-            <h1>{id} {email} {token} {name}</h1>
+            {habits.map((habit) => (
+                <Habit object={habit} key={habit.id}/>
+            ))}
         </Container>
+        </Page>
+        <Footer/>
+        </>
     )
 }
-
+const Page=styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    background: #E5E5E5;
+`
 const Container=styled.div`
     display: flex;
     align-items: center;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 68px;
-    
+    justify-content: space-between;
+    width: 95%;
+    margin-top: 20px;
     font-family: 'Lexend Deca', sans-serif;
-    img{
-        width: 180px;
-        height: 178px;
-        margin-bottom: 35px;
-    }
-    a{
-        margin-top: 25px;
+    h1{
         font-family: 'Lexend Deca';
         font-style: normal;
         font-weight: 400;
-        font-size: 13.976px;
-        line-height: 17px;
-        text-align: center;
-        text-decoration-line: underline;
+        font-size: 22.976px;
+        line-height: 29px;
 
-        color: #52B6FF;
+        color: #126BA5;
     }
-
 `
-const Form = styled.form`
+const Add=styled.div`
+    width: 40px;
+    height: 35px;
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-right: 36px;
-    margin-left: 36px;
-    
-    input {
-        height: 45px;
-        margin-right: 36px;
-        margin-left: 36px;
-        min-width:  100px;
-        margin-bottom: 6px;
-        border-radius: 5px;
-        border: 1px solid #D4D4D4; 
-        padding-left:11px ;
-    }
-    input::placeholder {
-        color: grey;
-        font-size: 20px;
-        font-style: italic;
-    }
-    button {
-        min-width: 100px;
-        height: 45px;
-        margin-right: 36px;
-        margin-left: 36px;
-        text-align: center;
-        background-color: #52B6FF;
-        color: #FFFFFF;
-        font-size: 21px;
-        border: none;
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        a{
-            text-decoration: none;
-        }
-    }
+    align-items: center;
+    justify-content: center;
+    background: #52B6FF;
+    border-radius: 4.63636px;
+    font-size: 25px;
+    color: #ffffff;
+    padding-bottom: 4px;
 `
