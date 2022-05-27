@@ -41,7 +41,7 @@ export default function HabitsPage(){
         <NewHabit></NewHabit>
         <Container>
             {habits.map((habit) => (
-                <Habit object={habit} key={habit.id}/>
+                <Habit habit={habit} key={habit.id}/>
             ))}
         </Container>
         </Page>
@@ -49,14 +49,17 @@ export default function HabitsPage(){
         </>
     )
 }
+
 const Page=styled.div`
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 140px);
     background: #E5E5E5;
+    //margin-top: 70px;
 `
 const Container=styled.div`
     display: flex;

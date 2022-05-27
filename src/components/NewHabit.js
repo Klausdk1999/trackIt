@@ -13,12 +13,17 @@ export default function NewHabit(){
     const navigate = useNavigate();
 
     function submitData(event) {
+
         event.preventDefault();
 
-        let postdays=days.filter(Boolean); //pegar numero dos que forem true
-        console.log("days "+ days)
-        console.log("postdays "+ postdays);
-        
+        let postdays=[];
+        for(let i=0;i<7;i++){
+            if(days[i]){
+                postdays.push(i);
+                console.log("postdays "+ postdays);
+            }
+        }
+       
         let postObject={
             name: habit,
             days: postdays
@@ -40,7 +45,23 @@ export default function NewHabit(){
         });
     }
 
+    const [backgrounds,setBackgrounds]=useState(["#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"]);
+    const [colors,setColors]=useState(["#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF"]);
+
     function selectDay(day){
+        let newbackgrounds=[...backgrounds];
+        let newcolors=[...colors];
+        if(newbackgrounds[day]==="#ffffff"){
+            newbackgrounds[day]="#CFCFCF";
+            newcolors[day]="#ffffff";
+        }else{
+            newbackgrounds[day]="#ffffff";
+            newcolors[day]="#CFCFCF";
+        }
+        console.log("newbackgrounds: "+newbackgrounds);
+        setBackgrounds(newbackgrounds);
+        setColors(newcolors);
+
         let newdays=[...days];
         newdays[day]=(!newdays[day]);
         setDays(newdays);
@@ -50,16 +71,20 @@ export default function NewHabit(){
         <Container>
             <input type="text" id="name" value={habit} placeholder="Nome do hábito" required onChange={(e)=>setHabit(e.target.value)} />
             
-            <Row><DayBox onClick={() => selectDay(0)}>D</DayBox>
-            <DayBox onClick={() => selectDay(1)}>S</DayBox>
-            <DayBox onClick={() => selectDay(2)}>T</DayBox>
-            <DayBox onClick={() => selectDay(3)}>Q</DayBox>
-            <DayBox onClick={() => selectDay(4)}>Q</DayBox>
-            <DayBox onClick={() => selectDay(5)}>S</DayBox>
-            <DayBox onClick={() => selectDay(6)}>S</DayBox></Row>
+            <Row>
+                <DayBox colors={colors[0]} backgrounds={backgrounds[0]}  onClick={() => selectDay(0)}>D</DayBox>
+                <DayBox colors={colors[1]} backgrounds={backgrounds[1]}  onClick={() => selectDay(1)}>S</DayBox>
+                <DayBox colors={colors[2]} backgrounds={backgrounds[2]}  onClick={() => selectDay(2)}>T</DayBox>
+                <DayBox colors={colors[3]} backgrounds={backgrounds[3]}  onClick={() => selectDay(3)}>Q</DayBox>
+                <DayBox colors={colors[4]} backgrounds={backgrounds[4]}  onClick={() => selectDay(4)}>Q</DayBox>
+                <DayBox colors={colors[5]} backgrounds={backgrounds[5]}  onClick={() => selectDay(5)}>S</DayBox>
+                <DayBox colors={colors[6]} backgrounds={backgrounds[6]}  onClick={() => selectDay(6)}>S</DayBox>
+            </Row>
 
-            <Row><button onClick={submitData}>Salvar</button>
-            <button onClick={submitData}>Cancelar</button> </Row>
+            <Row>
+                <button onClick={submitData}>Salvar</button>
+                <button onClick={submitData}>Cancelar</button> 
+            </Row>
             
         </Container>
     )
@@ -69,23 +94,25 @@ const DayBox=styled.div`
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 30px;
     height: 30px;
-    background: #FFFFFF;
-    border: 1px solid #D5D5D5;
+    background: ${props => props.backgrounds};
+    border: 1px solid #CFCFCF;
     border-radius: 5px;
-    
+    margin:5px;
     font-family: 'Lexend Deca';
     font-style: normal;
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    color: #DBDBDB;
+    color: ${props => props.colors};
 `
 const Row=styled.div`
     display: flex;
     align-items: center;
     button {
+        margin:10px;
         min-width: 100px;
         height: 45px;
         margin-right: 36px;
@@ -108,15 +135,36 @@ const Container=styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 100%;
+    width: 90%;
     margin-top: 68px;
-    
+    background-color: #ffffff;
+    border-radius: 5px;
     font-family: 'Lexend Deca', sans-serif;
+    margin:10px;
+    padding: 10px;
+    input{
+        padding-left:10px;
+        width: 303px;
+        height: 45px;
+        background: #FFFFFF;
+        border: 1px solid #D5D5D5;
+        border-radius: 5px;
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19.976px;
+        line-height: 25px;
+        color: #666666;
+    }
+    input::placeholder{
+        color: #DBDBDB;
+    }
     img{
         width: 180px;
         height: 178px;
         margin-bottom: 35px;
     }
+
     a{
         margin-top: 25px;
         font-family: 'Lexend Deca';
@@ -126,7 +174,6 @@ const Container=styled.div`
         line-height: 17px;
         text-align: center;
         text-decoration-line: underline;
-
         color: #52B6FF;
     }
 `
