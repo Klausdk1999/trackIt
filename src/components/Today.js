@@ -36,7 +36,6 @@ export default function Today(){
     const day = now.format("dddd");
     const Day = day.charAt(0).toUpperCase() + day.slice(1);
     
-
     return(
         <>
         <Header/>

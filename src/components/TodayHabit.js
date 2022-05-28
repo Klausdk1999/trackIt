@@ -1,11 +1,14 @@
 import {React,useState,useEffect} from "react";
 import styled from 'styled-components';
-import trash from "./media/trash.png" ;
 import axios from "axios";
+import checkmark from "./media/check.png" ;
 
 export default function TodayHabit({habit,loadHabits,token}){
    
-    // const [backgrounds,setBackgrounds]=useState(["#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"]);
+    const [background,setBackground]=useState("#EBEBEB");
+    if(habit.done){
+        setBackground("#8FC549");
+    }
     // const [colors,setColors]=useState(["#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF"]);
 
     // useEffect(() => {
@@ -28,21 +31,21 @@ export default function TodayHabit({habit,loadHabits,token}){
     //     isHabitDay(habit.days);
     // }, []);
 
-    function deleteHabit(id){
-       
+
+    function doHabit(){
+
         const config = {
             headers: {
-                "Authorization": `Bearer ${token}`
+              "Authorization": `Bearer ${token}`
             }
         };
-          
-        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,config);
 
-        promise.then(resposta => {
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}/check`,config);
+    
+        promise.then(resposta => {  
             console.log(resposta.data);
             loadHabits();
         });
-        //RECARREGAR HABITOS
     }
 
     return(
@@ -54,11 +57,10 @@ export default function TodayHabit({habit,loadHabits,token}){
                     <h2>Sequência atual: {habit.currentSequence}</h2><br></br>
                     <h2>Seu recorde: {habit.highestSequence}</h2>
                 </Column>
-                <>
-                    <h1>botao</h1>
-                </>
+                <Column>
+                    <CheckBox background={background} onClick={doHabit}><img src={checkmark}></img></CheckBox>
+                </Column>
             </Row>
-                
         </Container>
         </>
     )
@@ -83,11 +85,20 @@ const DayBox=styled.div`
     line-height: 25px;
     color: ${props => props.colors};
 `
+const CheckBox=styled.div`
+    width: 69px;
+    height: 69px;
+    background: ${props => props.background};
+    border-radius: 5px;
+    margin-right:10px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+`
 const Column=styled.div`
     display: flex;
     flex-direction:column;
     justify-content: center;
-   // align-items: center;
 `
 const Row=styled.div`
     width: 100%;
@@ -96,19 +107,20 @@ const Row=styled.div`
     align-items: center;
 `
 const Container=styled.div`
+    box-sizing: border-box;
     display: flex;
-   // align-items: center;
+    align-items: center;
     flex-direction: column;
     width: 340px;
     height: 91px;
     background: #FFFFFF;
     border-radius: 5px;
-    padding: 5px;
-    //justify-content: center;
+    padding: 10px;
+    justify-content: center;
     margin-bottom: 15px;
 
     h1{
-        margin: 10px;
+        margin-left: 10px;
         font-family: 'Lexend Deca';
         font-style: normal;
         font-weight: 400;
