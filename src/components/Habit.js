@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import trash from "./media/trash.png" ;
 import axios from "axios";
 
-export default function Habit({habit,token}){
-
+export default function Habit({habit,loadHabits,token}){
+   
     const [backgrounds,setBackgrounds]=useState(["#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"]);
     const [colors,setColors]=useState(["#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF"]);
 
@@ -29,6 +29,7 @@ export default function Habit({habit,token}){
     }, []);
 
     function deleteHabit(id){
+       
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -39,6 +40,7 @@ export default function Habit({habit,token}){
 
         promise.then(resposta => {
             console.log(resposta.data);
+            loadHabits();
         });
         //RECARREGAR HABITOS
     }

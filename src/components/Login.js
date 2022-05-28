@@ -42,7 +42,6 @@ export default function LoginScreen(){
     }
     
     return(
-
         <Container>
             <img src={logo} alt="logo"/>
             {isLoading ? (

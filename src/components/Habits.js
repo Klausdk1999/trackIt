@@ -1,7 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 import axios from 'axios';
-//import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect,useContext , useState } from 'react';
 import UserContext from "../context/UserContext";
 import Header from "./Header";
@@ -11,43 +11,47 @@ import NewHabit from "./NewHabit";
 
 export default function HabitsPage(){
     const { user } = useContext(UserContext);
-   
+    
     const {image,token} = user;
     const [habits,setHabits]=useState([]);
-    //const navigate = useNavigate();
-    // navigate("/");
+    
     const [hasHabit, sethasHabit] = useState(true);
     const [add, setAdd] = useState(false);
-    useEffect(() => {
-        const config = {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-        };
 
+    useEffect(() => {
+       
+        loadHabits();
+
+    }, []);
+
+    const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+    };
+
+    function loadHabits(){
         const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`,config);
 
         promise.then(resposta => {
-            console.log(resposta.data);
-            setHabits(...habits,resposta.data);
+            setHabits(resposta.data);
             sethasHabit(false);
         });
+    }
 
-    }, []);
-   
     return(
         <>
         <Header/>
         <Page>
         <Container> <h1>Meus hábitos</h1> <Add onClick={() => setAdd(!add)}>+</Add> </Container>
-        {add ? (<NewHabit setAdd={setAdd}/>):(<></>)}
+        {add ? (<NewHabit setAdd={setAdd} loadHabits={loadHabits} />):(<></>)}
         {hasHabit ? 
         (
             <DummyText> Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear! </DummyText>
         ):(
             <Column>
                 {habits.map((habit) => (
-                    <Habit habit={habit} token={token} key={habit.id}/>
+                    <Habit habit={habit} loadHabits={loadHabits} token={token} key={habit.id}/>
                 ))}
             </Column>
         )}
