@@ -98,10 +98,10 @@ const Column=styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    height: calc(100vh - 140px);
+    width: 95%;
+   
     background: #E5E5E5;
-    margin: 20px;
+    margin-top: 20px;
     margin-bottom: 35px;
 `
 const Text=styled.div`
@@ -114,20 +114,23 @@ const Text=styled.div`
     color: ${props=>props.color};
 `
 const Page=styled.div`
+    margin-top:70px;
+    margin-bottom:70px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     height: calc(100vh - 140px);
+    overflow-x: scroll;
     background: #E5E5E5;
-    //margin-top: 70px;
 `
 const Container=styled.div`
     display: flex;
     align-items: center;
-    width: 88%;
-    margin-top: 20px;
+    margin-top: 15px;
+    justify-content: space-between;
+    width: 90%;
     font-family: 'Lexend Deca', sans-serif;
     h1{
         font-family: 'Lexend Deca';

@@ -23,6 +23,9 @@ const Container=styled.div`
     height: 70px;
     background-color:#126BA5 ;
     justify-content: space-between;
+    position:fixed;
+    top:0;
+    right:0;
     h1{
         margin:18px; 
         font-family: 'Playball';
