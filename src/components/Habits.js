@@ -56,7 +56,7 @@ export default function HabitsPage(){
             </Column>
         )}
         </Page>
-        <Footer/>
+        <Footer percent={user.percentage}/>
         </>
     )
 }

@@ -32,12 +32,13 @@ export default function LoginScreen(){
             setIsLoading(false);
             console.log(resposta.data);
             setUser(
-                {
+                {   
                     image: resposta.data.image,
-                    token: resposta.data.token
+                    token: resposta.data.token,
+                    percentage: 0
                 },
             );
-            navigate("/habitos");
+            navigate("/hoje");
         });
     }
     

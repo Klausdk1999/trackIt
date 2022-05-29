@@ -5,42 +5,26 @@ import checkmark from "./media/check.png" ;
 
 export default function TodayHabit({habit,loadHabits,token}){
    
-    const [background,setBackground]=useState("#EBEBEB");
+    let background='';
     if(habit.done){
-        setBackground("#8FC549");
+        background="#8FC549";
+    }else{
+        background="#EBEBEB";
     }
-    // const [colors,setColors]=useState(["#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF","#CFCFCF"]);
-
-    // useEffect(() => {
-    //     function isHabitDay(days){
-
-    //         let newbackgrounds=[...backgrounds];
-    //         let newcolors=[...colors];
-    //         for(let i=0;i<7;i++){
-    //             for(let j=0;j<days.length;j++){
-    //                 if(i===days[j]){
-    //                     newcolors[i]="#ffffff";
-    //                     newbackgrounds[i]="#CFCFCF";
-    //                 }
-    //             }  
-    //         }
-    //         setBackgrounds(newbackgrounds);
-    //         setColors(newcolors);
-    //     }
-    
-    //     isHabitDay(habit.days);
-    // }, []);
-
 
     function doHabit(){
-
+        let isCheck;
         const config = {
             headers: {
               "Authorization": `Bearer ${token}`
             }
         };
-
-        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}/check`,config);
+        if(habit.done){
+            isCheck="uncheck";
+        }else{
+            isCheck="check";
+        }
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}/${isCheck}`,null, config);
     
         promise.then(resposta => {  
             console.log(resposta.data);
@@ -50,12 +34,12 @@ export default function TodayHabit({habit,loadHabits,token}){
 
     return(
         <>
-        <Container>
+        <Container background={background}>
             <Row>
                 <Column>
                     <h1>{habit.name}</h1>
-                    <h2>Sequência atual: {habit.currentSequence}</h2><br></br>
-                    <h2>Seu recorde: {habit.highestSequence}</h2>
+                    <h2>Sequência atual:<strong>{habit.currentSequence}</strong></h2><br></br>
+                    <h2>Seu recorde:<strong>{habit.highestSequence}</strong></h2>
                 </Column>
                 <Column>
                     <CheckBox background={background} onClick={doHabit}><img src={checkmark}></img></CheckBox>
@@ -66,25 +50,6 @@ export default function TodayHabit({habit,loadHabits,token}){
     )
 }
 
-const DayBox=styled.div`
-    cursor: pointer;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    background: ${props => props.backgrounds};
-    border: 1px solid #CFCFCF;
-    border-radius: 5px;
-    margin: 2.5px;
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19.976px;
-    line-height: 25px;
-    color: ${props => props.colors};
-`
 const CheckBox=styled.div`
     width: 69px;
     height: 69px;
@@ -137,5 +102,14 @@ const Container=styled.div`
         font-size: 12.976px;
         line-height: 16px;
         color: #666666;
+    }
+    strong{
+        margin-left: 10px;
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12.976px;
+        line-height: 16px;
+        color: ${props => props.background};
     }
 `
