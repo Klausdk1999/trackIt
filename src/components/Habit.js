@@ -92,6 +92,7 @@ const ContainerDays=styled.div`
 const Row=styled.div`
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     img{
@@ -99,6 +100,9 @@ const Row=styled.div`
         height:15px;
     }
     h1{
+        word-break:break-all;
+        display: flex;
+        flex-wrap: wrap;
         margin: 10px;
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -132,10 +136,11 @@ const Row=styled.div`
 `
 const Container=styled.div`
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     flex-direction: column;
     width: 340px;
-    height: 91px;
+    min-height: 91px;
     background: #FFFFFF;
     border-radius: 5px;
     padding: 5px;
